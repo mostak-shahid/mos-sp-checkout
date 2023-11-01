@@ -56,10 +56,10 @@ function mos_sp_checkout_post_meta_options() {
     //if ( $post_id && 'mos-sp-checkout-template.php' == get_post_meta( $post_id, '_wp_page_template', true ) ) {
         Container::make('post_meta', 'Checkout Page Data')
         ->where('post_type', '=', 'page')
-        //->show_on_template('mos-sp-checkout-template.php')
+        ->show_on_template('mos-sp-checkout-template.php')
         ->add_fields(array(
             Field::make( 'association', 'mos_sp_checkout_products', __( 'Select Products' ) )
-            ->set_required( true )
+            //->set_required( true )
             ->set_types( array(
                 array(
                     'type'      => 'post',
