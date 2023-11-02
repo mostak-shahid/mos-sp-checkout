@@ -2,7 +2,7 @@
 <?php 
 the_content();
 ?>
-
+<section class="checkout-form-wrap">
 <?php
 /**
  * Detect plugin. For frontend only.
@@ -14,4 +14,5 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 	echo do_shortcode('[woocommerce_checkout]');
 } 
 ?>
+</section>
 <?php get_footer() ?>
