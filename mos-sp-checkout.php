@@ -103,3 +103,25 @@ function mos_remove_product_from_cart_programmatically() {
     //     }
     // }
 }
+function mos_sp_checkout_enqueue_scripts(){
+	wp_enqueue_script( 'jquery.validate.min', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js', array('jquery') );
+}
+add_action( 'wp_enqueue_scripts', 'mos_sp_checkout_enqueue_scripts' );
+
+function mos_sp_checkout_footer_script_function() {
+    ?>
+    <script>
+        jQuery(document).ready(function($) {
+            $('.validate-required').find('input, select').attr('required', true);
+            $(".checkout-form-wrap .woocommerce-checkout").validate();
+        });
+    </script>
+	<style>
+	.error {
+		border: none;
+		color: #E01020;
+	}
+	</style>
+    <?php
+}
+add_action('wp_footer', 'mos_sp_checkout_footer_script_function');
