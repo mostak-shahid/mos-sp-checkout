@@ -5,6 +5,7 @@ jQuery(document).ready(function($){
         var p_id = $(this).data('id');
         var page_id = $(this).data('page_id');
         if (p_id) {
+            $('.checkout-form-wrap').append('<div class="mos-sp-checkout-loading">Loading...</div>');
             $.ajax({
                 url: mos_sp_checkout_ajax_obj.ajax_url, // or example_ajax_obj.ajaxurl if using on frontend
                 type:"POST",
@@ -19,6 +20,7 @@ jQuery(document).ready(function($){
                     $('.woocommerce-checkout-review-order-table').html(result.html);
                     ths.addClass('checked');
                     ths.siblings().removeClass('checked');
+                    $('.mos-sp-checkout-loading').remove();
                 },
                 error: function(errorThrown){
                     console.log(errorThrown);
