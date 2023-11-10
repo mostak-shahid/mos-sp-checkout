@@ -1,0 +1,46 @@
+:root {
+  --mos-sp-checkout-theme: green;
+}
+html {
+  scroll-behavior: smooth;
+}
+.mos-sp-checkout-product-form {
+  display: flex;
+  padding: 15px;
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  text-decoration: none;
+  gap: 10px;
+}
+.mos-sp-checkout-product-form + .mos-sp-checkout-product-form {
+  margin-top: 10px;
+}
+.mos-sp-checkout-product-form .mos-sp-checkout-indicator {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 1px #eaeaea;
+  -webkit-box-shadow: 0px 0px 0px 1px #eaeaea;
+  -moz-box-shadow: 0px 0px 0px 1px #eaeaea;
+}
+.mos-sp-checkout-product-form.checked {
+  border-color: var(--mos-sp-checkout-theme);
+  color: var(--mos-sp-checkout-theme);
+}
+.mos-sp-checkout-product-form.checked .mos-sp-checkout-indicator {
+  background-color: var(--mos-sp-checkout-theme);
+  border-color: #ffffff;
+  box-shadow: 0px 0px 0px 1px var(--mos-sp-checkout-theme);
+  -webkit-box-shadow: 0px 0px 0px 1px var(--mos-sp-checkout-theme);
+  -moz-box-shadow: 0px 0px 0px 1px var(--mos-sp-checkout-theme);
+}
+.mos-sp-checkout-product-form .mos-sp-checkout-product-title {
+  display: block;
+  font-size: 1.07em;
+  font-weight: 600;
+}
