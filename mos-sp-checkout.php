@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.9
+ * Version:           0.0.10
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -34,7 +34,7 @@ $pluginInit = Puc_v4_Factory::buildUpdateChecker(
 function add_slug_body_class( $classes ) {
     global $post;
     if ( get_page_template_slug() == 'mos-sp-checkout-template.php' ) {
-        $classes[] = 'woocommerce-checkout woocommerce-page woocommerce-block-theme-has-button-styles woocommerce-js';
+        $classes[] = 'mos-sp-checkout-page woocommerce-checkout woocommerce-page woocommerce-block-theme-has-button-styles woocommerce-js';
     }
     //$classes[] = "theme-default";
     return $classes;
