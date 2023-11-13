@@ -23,6 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'MOS_SP_CHECKOUT_FILE' ) ) {
 	define( 'MOS_SP_CHECKOUT_FILE', __FILE__ );
 }
+require_once('plugins/update/plugin-update-checker.php');
+$pluginInit = Puc_v4_Factory::buildUpdateChecker(
+	'https://raw.githubusercontent.com/mostak-shahid/update/master/mos-sp-checkout.json',
+	MOS_PLUGIN_FILE,
+	'mos-plugin'
+);
 
 //Load template from specific page
 add_filter( 'page_template', 'mos_sp_checkout_page_template' );
