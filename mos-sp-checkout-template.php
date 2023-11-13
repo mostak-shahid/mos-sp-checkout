@@ -1,6 +1,6 @@
 <?php get_header() ?>
 <?php 
-global $post;
+//var_dump(is_checkout());
 $mos_sp_checkout_page_type = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_page_type' );
 $mos_sp_checkout_before_content = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_before_content' );
 $mos_sp_checkout_iframe = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_iframe' );
