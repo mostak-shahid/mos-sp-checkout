@@ -26,7 +26,7 @@ if ( ! defined( 'MOS_SP_CHECKOUT_FILE' ) ) {
 require_once('plugins/update/plugin-update-checker.php');
 $pluginInit = Puc_v4_Factory::buildUpdateChecker(
 	'https://raw.githubusercontent.com/mostak-shahid/update/master/mos-sp-checkout.json',
-	MOS_PLUGIN_FILE,
+	MOS_SP_CHECKOUT_FILE,
 	'mos-plugin'
 );
 
