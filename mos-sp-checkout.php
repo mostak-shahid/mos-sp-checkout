@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       Mos Single Page Checkout
+ * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.2
+ * Version:           0.0.3
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
