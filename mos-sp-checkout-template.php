@@ -18,7 +18,7 @@ if ($mos_sp_checkout_page_type == 'template-1') {
 	}
 	if ($mos_sp_checkout_iframe) {
 		?>
-		<div class="iframe-content">
+		<div class="iframe-content mb-20">
 			<div class="ratio <?php echo ($mos_sp_checkout_iframe_ratio)?$mos_sp_checkout_iframe_ratio:'ratio-1x1' ?>">
 				<iframe src="<?php echo do_shortcode($mos_sp_checkout_iframe)?>" allowfullscreen></iframe>
 			</div>			

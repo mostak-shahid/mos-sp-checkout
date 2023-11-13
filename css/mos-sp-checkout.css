@@ -4,6 +4,9 @@
 html {
   scroll-behavior: smooth;
 }
+.mb-20 {
+  margin-bottom: 20px !important;
+}
 .mos-sp-checkout-output {
   width: 100%;
   flex: 0 0 100%;
