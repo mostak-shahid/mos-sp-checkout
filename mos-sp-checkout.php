@@ -3,7 +3,7 @@
  * Plugin Name:       Mos Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.1
+ * Version:           0.0.2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -75,6 +75,12 @@ function mos_sp_checkout_post_meta_options() {
             ->add_options( array(
                 'all' => 'Add all to cart',
                 'switch' => 'Switch between products',
+                //'together' => 'Buy together',
+            ) ),
+            Field::make( 'select', 'mos_sp_checkout_page_type', 'How page will be displayed?' )
+            ->add_options( array(
+                'default' => 'Default',
+                'template-1' => 'Template 1',
                 //'together' => 'Buy together',
             ) )
         ));  
