@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.3
+ * Version:           0.0.4
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -29,6 +29,17 @@ $pluginInit = Puc_v4_Factory::buildUpdateChecker(
 	MOS_SP_CHECKOUT_FILE,
 	'mos-sp-checkout'
 );
+
+
+function add_slug_body_class( $classes ) {
+    global $post;
+    if ( get_page_template_slug() == 'mos-sp-checkout-template.php' ) {
+        $classes[] = 'woocommerce-checkout woocommerce-page woocommerce-block-theme-has-button-styles woocommerce-js';
+    }
+    //$classes[] = "theme-default";
+    return $classes;
+}
+add_filter( 'body_class', 'add_slug_body_class' );
 
 //Load template from specific page
 add_filter( 'page_template', 'mos_sp_checkout_page_template' );
@@ -81,8 +92,50 @@ function mos_sp_checkout_post_meta_options() {
             ->add_options( array(
                 'default' => 'Default',
                 'template-1' => 'Template 1',
-                //'together' => 'Buy together',
-            ) )
+            ) ),
+            Field::make( 'rich_text', 'mos_sp_checkout_before_content', 'Before Content' )
+                ->set_conditional_logic(array(
+                    'relation' => 'AND', // Optional, defaults to "AND"
+                    array(
+                        'field' => 'mos_sp_checkout_page_type',
+                        'value' => 'default', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+                        'compare' => '!=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+                    )
+                )),
+            Field::make( 'text', 'mos_sp_checkout_iframe', 'Iframe' )
+                ->set_attribute( 'type', 'url' )
+                ->set_conditional_logic(array(
+                    'relation' => 'AND', // Optional, defaults to "AND"
+                    array(
+                        'field' => 'mos_sp_checkout_page_type',
+                        'value' => 'default', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+                        'compare' => '!=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+                    )
+                )),
+            Field::make( 'select', 'mos_sp_checkout_iframe_ratio', 'Iframe Ration' )
+                ->set_conditional_logic(array(
+                    'relation' => 'AND', // Optional, defaults to "AND"
+                    array(
+                        'field' => 'mos_sp_checkout_iframe',
+                        'value' => '', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+                        'compare' => '!=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+                    )
+                ))
+                ->add_options( array(
+                    'ratio-1x1' => '1x1',
+                    'ratio-4x3' => '4x3',
+                    'ratio-16x9' => '16x9',
+                    'ratio-21x9' => '21x9',
+            ) ),
+            Field::make( 'rich_text', 'mos_sp_checkout_after_content', 'After Content' )
+            ->set_conditional_logic(array(
+                'relation' => 'AND', // Optional, defaults to "AND"
+                array(
+                    'field' => 'mos_sp_checkout_page_type',
+                    'value' => 'default', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+                    'compare' => '!=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+                )
+            )),
         ));  
     //}
 }
