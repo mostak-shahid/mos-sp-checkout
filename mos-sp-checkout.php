@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.8
+ * Version:           0.0.9
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -204,7 +204,7 @@ function mos_sp_checkout_enqueue_scripts(){
 	wp_localize_script( 'mos-sp-checkout-ajax', 'mos_sp_checkout_ajax_obj', $ajax_params );
 
 	wp_enqueue_script( 'jquery.validate.min', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js', array('jquery') );    
-	wp_enqueue_style( 'mos-sp-checkout', plugins_url( 'css/mos-sp-checkout.css', __FILE__ ) );
+	wp_enqueue_style( 'mos-sp-checkout', plugins_url( 'css/mos-sp-checkout.css', __FILE__ ), array(), time() );
 }
 add_action( 'wp_enqueue_scripts', 'mos_sp_checkout_enqueue_scripts' );
 
