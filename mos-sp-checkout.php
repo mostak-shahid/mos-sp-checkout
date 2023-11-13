@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.7
+ * Version:           0.0.8
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
