@@ -4,6 +4,10 @@
 html {
   scroll-behavior: smooth;
 }
+.mos-sp-checkout-output {
+  width: 100%;
+  flex: 0 0 100%;
+}
 .checkout-form-wrap {
   position: relative;
 }

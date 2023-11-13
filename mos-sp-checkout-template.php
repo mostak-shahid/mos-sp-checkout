@@ -8,25 +8,31 @@ $mos_sp_checkout_iframe_ratio = carbon_get_post_meta( $post->ID, 'mos_sp_checkou
 $mos_sp_checkout_after_content = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_after_content' );
 
 if ($mos_sp_checkout_page_type == 'template-1') {
+	?>
+	<section class="mos-sp-checkout-output">
+	<?php
 	if ($mos_sp_checkout_before_content) {
 		?>
-		<section class="before-content"><?php echo do_shortcode($mos_sp_checkout_before_content)?></section>
+		<div class="before-content"><?php echo do_shortcode($mos_sp_checkout_before_content)?></div>
 		<?php
 	}
 	if ($mos_sp_checkout_iframe) {
 		?>
-		<section class="iframe-content">
+		<div class="iframe-content">
 			<div class="ratio <?php echo ($mos_sp_checkout_iframe_ratio)?$mos_sp_checkout_iframe_ratio:'ratio-1x1' ?>">
 				<iframe src="<?php echo do_shortcode($mos_sp_checkout_iframe)?>" allowfullscreen></iframe>
 			</div>			
-		</section>
+		</div>
 		<?php
 	}
 	if ($mos_sp_checkout_after_content) {
 		?>
-		<section class="after-content"><?php echo do_shortcode($mos_sp_checkout_after_content)?></section>
+		<div class="after-content"><?php echo do_shortcode($mos_sp_checkout_after_content)?></div>
 		<?php
 	}
+	?>
+	</section>
+	<?php 
 } else {
 	the_content();
 }
