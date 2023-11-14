@@ -31,7 +31,7 @@ $pluginInit = Puc_v4_Factory::buildUpdateChecker(
 );
 
 
-function add_slug_body_class( $classes ) {
+function add_mos_sp_checkout_body_class( $classes ) {
     global $post;
     if ( get_page_template_slug() == 'mos-sp-checkout-template.php' ) {
         $classes[] = 'mos-sp-checkout-page woocommerce-checkout woocommerce-page woocommerce-block-theme-has-button-styles woocommerce-js';
@@ -39,7 +39,7 @@ function add_slug_body_class( $classes ) {
     //$classes[] = "theme-default";
     return $classes;
 }
-add_filter( 'body_class', 'add_slug_body_class' );
+add_filter( 'body_class', 'add_mos_sp_checkout_body_class' );
 
 add_action('wp', 'pk_custom_checkout_wp');
 function pk_custom_checkout_wp() {
