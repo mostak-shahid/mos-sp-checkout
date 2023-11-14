@@ -18,7 +18,6 @@ if ($header_layout_id) :
 			<?php
 				$header_layout_content_post = get_post($header_layout_id);
 				$header_layout_content = $header_layout_content_post->post_content;
-				$header_layout_content = apply_filters('the_content', $header_layout_content);
 				$header_layout_content = str_replace(']]>', ']]&gt;', $header_layout_content);
 				echo $header_layout_content;  
 			?>
@@ -88,7 +87,6 @@ if ($footer_layout_id) :
 			<?php
 				$footer_layout_content_post = get_post($footer_layout_id);
 				$footer_layout_content = $footer_layout_content_post->post_content;
-				$footer_layout_content = apply_filters('the_content', $footer_layout_content);
 				$footer_layout_content = str_replace(']]>', ']]&gt;', $footer_layout_content);
 				echo $footer_layout_content;  
 			?>
