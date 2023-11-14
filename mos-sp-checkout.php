@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.11
+ * Version:           0.0.12
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -24,6 +24,7 @@ if ( ! defined( 'MOS_SP_CHECKOUT_FILE' ) ) {
 	define( 'MOS_SP_CHECKOUT_FILE', __FILE__ );
 }
 require_once('plugins/update/plugin-update-checker.php');
+require_once('mos-sp-checkout-post-types.php');
 $pluginInit = Puc_v4_Factory::buildUpdateChecker(
 	'https://raw.githubusercontent.com/mostak-shahid/update/master/mos-sp-checkout.json',
 	MOS_SP_CHECKOUT_FILE,
@@ -96,6 +97,23 @@ function mos_sp_checkout_post_meta_options() {
                 'switch' => 'Switch between products',
                 //'together' => 'Buy together',
             ) ),
+            Field::make( 'association', 'mos_sp_checkout_header', __( 'Select Header' ) )            
+            ->set_max(1)
+            ->set_types( array(
+                array(
+                    'type'      => 'post',
+                    'post_type' => 'layout',
+                )
+            )),
+            Field::make( 'association', 'mos_sp_checkout_footer', __( 'Select Footer' ) )            
+            ->set_max(1)
+            ->set_types( array(
+                array(
+                    'type'      => 'post',
+                    'post_type' => 'layout',
+                )
+            )),
+
             Field::make( 'select', 'mos_sp_checkout_page_type', 'How page will be displayed?' )
             ->add_options( array(
                 'default' => 'Default',

@@ -9,6 +9,23 @@
 </head>
 <body <?php body_class(); ?>>
 <?php 
+$header_layout = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_header' );
+$header_layout_id = $header_layout[0]['id'];
+if ($header_layout_id) : 
+?>
+	<header class="mos-sg-checkout-header">
+		<div class="wp-block-nk-awb nk-awb alignfull p-0"> 
+			<?php
+				$header_layout_content_post = get_post($header_layout_id);
+				$header_layout_content = $header_layout_content_post->post_content;
+				$header_layout_content = apply_filters('the_content', $header_layout_content);
+				$header_layout_content = str_replace(']]>', ']]&gt;', $header_layout_content);
+				echo $header_layout_content;  
+			?>
+		</div>
+	</header>
+<?php endif?>
+<?php 
 //var_dump(is_checkout());
 $mos_sp_checkout_page_type = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_page_type' );
 $mos_sp_checkout_before_content = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_before_content' );
@@ -59,6 +76,24 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 } 
 ?>
 </section>
+
+<?php 
+$footer_layout = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_footer' );
+$footer_layout_id = $footer_layout[0]['id'];
+if ($footer_layout_id) : 
+?>
+	<footer class="mos-sg-checkout-footer">
+		<div class="wp-block-nk-awb nk-awb alignfull p-0"> 
+			<?php
+				$footer_layout_content_post = get_post($footer_layout_id);
+				$footer_layout_content = $footer_layout_content_post->post_content;
+				$footer_layout_content = apply_filters('the_content', $footer_layout_content);
+				$footer_layout_content = str_replace(']]>', ']]&gt;', $footer_layout_content);
+				echo $footer_layout_content;  
+			?>
+		</div>
+	</footer>
+<?php endif?>
 <?php wp_footer(); ?>
 </body>
 </html>
