@@ -13,6 +13,9 @@ html {
 }
 .checkout-form-wrap {
   position: relative;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .mos-sp-checkout-loading {
   position: absolute;

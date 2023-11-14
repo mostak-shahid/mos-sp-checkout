@@ -32,6 +32,7 @@ $mos_sp_checkout_before_content = carbon_get_post_meta( $post->ID, 'mos_sp_check
 $mos_sp_checkout_iframe = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_iframe' );
 $mos_sp_checkout_iframe_ratio = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_iframe_ratio' );
 $mos_sp_checkout_after_content = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_after_content' );
+$mos_sp_checkout_form_width = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_form_width' );
 
 if ($mos_sp_checkout_page_type == 'template-1') {
 	?>
@@ -63,7 +64,7 @@ if ($mos_sp_checkout_page_type == 'template-1') {
 	the_content();
 }
 ?>
-<section class="checkout-form-wrap woocommerce">
+<section class="checkout-form-wrap woocommerce" <?php echo ($mos_sp_checkout_form_width)?'style="max-width: '.$mos_sp_checkout_form_width.'px"':'' ?> >
 <?php
 /**
  * Detect plugin. For frontend only.

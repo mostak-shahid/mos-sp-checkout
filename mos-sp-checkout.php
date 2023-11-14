@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.12
+ * Version:           0.0.13
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -97,6 +97,9 @@ function mos_sp_checkout_post_meta_options() {
                 'switch' => 'Switch between products',
                 //'together' => 'Buy together',
             ) ),
+            Field::make( 'text', 'mos_sp_checkout_form_width', 'Cart Width' )
+            ->set_attribute( 'type', 'number' ),
+
             Field::make( 'association', 'mos_sp_checkout_header', __( 'Select Header' ) )            
             ->set_max(1)
             ->set_types( array(
@@ -113,7 +116,7 @@ function mos_sp_checkout_post_meta_options() {
                     'post_type' => 'layout',
                 )
             )),
-
+/*
             Field::make( 'select', 'mos_sp_checkout_page_type', 'How page will be displayed?' )
             ->add_options( array(
                 'default' => 'Default',
@@ -162,6 +165,7 @@ function mos_sp_checkout_post_meta_options() {
                     'compare' => '!=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
                 )
             )),
+*/
         ));  
     //}
 }
