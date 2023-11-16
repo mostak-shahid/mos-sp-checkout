@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.mdmostakshahid.com/
  * Description:       Base of future plugin
- * Version:           0.0.13
+ * Version:           0.0.14
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Md. Mostak Shahid
@@ -51,11 +51,13 @@ function pk_custom_checkout_wp() {
 }
 
 //Load template from specific page
-add_filter( 'page_template', 'mos_sp_checkout_page_template' );
+//add_filter( 'page_template', 'mos_sp_checkout_page_template' );
 function mos_sp_checkout_page_template( $page_template ){
-
     if ( basename(get_page_template_slug() ) == 'mos-sp-checkout-template.php' ) {
         $page_template = dirname( __FILE__ ) . '/mos-sp-checkout-template.php';
+        add_action('wp_footer', function () {
+            wp_dequeue_style('core-block-supports');
+        });
     }
     return $page_template;
 }
@@ -393,3 +395,68 @@ function mos_order_modify_ajax_callback () {
     exit; // required. to end AJAX request.
 }
 
+function mos_sp_checkout_form_func( $atts = array(), $content = null ) {
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+	$html = '';
+	$atts = shortcode_atts( array(
+		'class' => '',
+		'products' => '',
+        'add-all' => 0,
+        'title' => '',
+	), $atts, 'mos_sp_checkout_form' ); 
+
+    if (@$atts['products']) {
+        $products = explode(',', $atts['products']);
+        if (@$atts['add-all']){
+            WC()->cart->empty_cart();
+            foreach($products as $p) {
+                WC()->cart->add_to_cart( $p );
+            }
+        } else{
+            WC()->cart->empty_cart();
+            WC()->cart->add_to_cart( (@$_GET['p_id'])?$_GET['p_id']:$products[0] );
+        }
+    
+        add_action(
+            'woocommerce_after_checkout_billing_form', 
+            function($arguments) use ($atts, $products) { 
+                if (!$atts['add-all']) {
+                    $crrent_cart_ids = [];
+                    $cart_items = $cart = WC()->cart->get_cart();
+                    foreach( $cart as $cart_item_key => $cart_item ){
+                        $cart_product = $cart_item['data'];
+                        $crrent_cart_ids[] = $cart_product->get_id();
+                    }
+                    ?>
+                    <div id="mos-sp-checkout-products-form-wrap">                    
+                        <?php foreach($products as $key => $value) :
+                            $_product = wc_get_product( $value );
+                            ?>
+                            <a href="?p_id=<?php echo $value ?>#mos-sp-checkout-products-form-wrap" class="mos-sp-checkout-product-form <?php echo (in_array($value, $crrent_cart_ids))?'checked':'' ?>" data-id="<?php echo $value ?>" data-page_id="<?php echo get_the_ID() ?>">
+                                <span class="mos-sp-checkout-indicator"></span>
+                                <span class="mos-sp-checkout-text-wrapper">
+                                    <span class="mos-sp-checkout-product-title"><?php echo $_product->get_name(); ?></span>
+                                    <span class="mos-sp-checkout-price"><?php echo $_product->get_price_html(); ?></span>
+                                </span>
+                            </a>
+                        <?php endforeach;?>                
+                    </div>
+                    <?php
+                }
+            }
+        );
+    }
+
+    ob_start(); ?>
+    <section class="checkout-form-wrap woocommerce woocommerce-checkout woocommerce-page  <?php echo @$atts['class']?>">
+    <?php
+    // var_dump(explode(',', $atts['add-all'])); 
+    if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+        echo do_shortcode('[woocommerce_checkout]');
+    } 
+    ?>
+    </section>
+    <?php $html = ob_get_clean();	
+	return $html;
+}
+add_shortcode( 'mos_sp_checkout_form', 'mos_sp_checkout_form_func' );
