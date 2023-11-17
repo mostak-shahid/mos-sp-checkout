@@ -3,7 +3,7 @@
  * Plugin Name:       Alpha Single Page Checkout
  * Plugin URI:        http://www.alphacommerz.com.bd/
  * Description:       Base of Single Page Checkout plugin
- * Version:           0.0.15
+ * Version:           0.0.16
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Alpha Commerz Ltd
@@ -231,6 +231,7 @@ function mos_sp_checkout_enqueue_scripts(){
     $current_theme = wp_get_theme();
     if ($current_theme->get('Name') == 'Woodmart' || $current_theme->get('Template') == 'woodmart') {   
         wp_enqueue_style( 'wd-woo-page-checkout-predefined', get_template_directory_uri() . '/css/parts/woo-page-checkout-predefined.min.css' );
+        wp_enqueue_style( 'wd-woo-opt-fbt-cart', get_template_directory_uri() . '/css/parts/woo-page-checkout-el-payment-methods.min.css' );
     }
 
 	wp_enqueue_script( 'jquery.validate.min', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js', array('jquery') );    
