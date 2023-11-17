@@ -104,3 +104,20 @@ html {
 .is-content-justification-center {
   justify-content: center;
 }
+.woocommerce-checkout-review-order-table tr {
+  display: flex;
+  border-bottom: 1px solid var(--brdcolor-gray-300);
+}
+.shop_table tr :is(td, th):last-child {
+  text-align: right;
+}
+.woocommerce-checkout-review-order-table tfoot td {
+  flex-grow: 1;
+}
+.woocommerce-shipping-methods {
+  list-style: none;
+}
+.woocommerce-shipping-methods li {
+  display: flex;
+  flex-direction: row-reverse;
+}
