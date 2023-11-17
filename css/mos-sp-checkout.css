@@ -101,3 +101,6 @@ html {
 .ratio-21x9 {
   --bs-aspect-ratio: 42.8571428571%;
 }
+.is-content-justification-center {
+  justify-content: center;
+}

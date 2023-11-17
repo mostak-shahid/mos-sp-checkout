@@ -10,7 +10,7 @@
 <body <?php body_class(); ?>>
 <?php 
 $header_layout = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_header' );
-$header_layout_id = $header_layout[0]['id'];
+$header_layout_id = @$header_layout[0]['id'];
 if ($header_layout_id) : 
 ?>
 	<header class="mos-sg-checkout-header">
@@ -24,6 +24,7 @@ if ($header_layout_id) :
 		</div>
 	</header>
 <?php endif?>
+<div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <?php 
 //var_dump(is_checkout());
 $mos_sp_checkout_page_type = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_page_type' );
@@ -60,9 +61,15 @@ if ($mos_sp_checkout_page_type == 'template-1') {
 	</section>
 	<?php 
 } else {
-	the_content();
+	// $page_content_post = get_post(get_the_ID());
+	// $page_content = $page_content_post->post_content;
+	// $page_content = str_replace(']]>', ']]&gt;', $page_content);
+	// //echo $page_content; 
+	echo get_the_content();
+	
 }
 ?>
+</div>
 <section class="checkout-form-wrap woocommerce" <?php echo ($mos_sp_checkout_form_width)?'style="max-width: '.$mos_sp_checkout_form_width.'px"':'' ?> >
 <?php
 /**
@@ -79,7 +86,7 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 <?php 
 $footer_layout = carbon_get_post_meta( $post->ID, 'mos_sp_checkout_footer' );
-$footer_layout_id = $footer_layout[0]['id'];
+$footer_layout_id = @$footer_layout[0]['id'];
 if ($footer_layout_id) : 
 ?>
 	<footer class="mos-sg-checkout-footer">
@@ -96,3 +103,4 @@ if ($footer_layout_id) :
 <?php wp_footer(); ?>
 </body>
 </html>
+

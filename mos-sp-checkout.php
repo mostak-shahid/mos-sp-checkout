@@ -1,17 +1,17 @@
 <?php
 /**
  * Plugin Name:       Alpha Single Page Checkout
- * Plugin URI:        http://www.mdmostakshahid.com/
- * Description:       Base of future plugin
- * Version:           0.0.13
+ * Plugin URI:        http://www.alphacommerz.com.bd/
+ * Description:       Base of Single Page Checkout plugin
+ * Version:           0.0.15
  * Requires at least: 5.2
  * Requires PHP:      7.2
- * Author:            Md. Mostak Shahid
- * Author URI:        http://www.mdmostakshahid.com/
+ * Author:            Alpha Commerz Ltd
+ * Author URI:        http://www.alphacommerz.com.bd/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Update URI:        http://www.mdmostakshahid.com/
- * Text Domain:       mos-form-pdf
+ * Update URI:        http://www.alphacommerz.com.bd/
+ * Text Domain:       mos-sp-checkout
  * Domain Path:       /languages
 **/
 
@@ -51,11 +51,13 @@ function pk_custom_checkout_wp() {
 }
 
 //Load template from specific page
-add_filter( 'page_template', 'mos_sp_checkout_page_template' );
+//add_filter( 'page_template', 'mos_sp_checkout_page_template' );
 function mos_sp_checkout_page_template( $page_template ){
-
     if ( basename(get_page_template_slug() ) == 'mos-sp-checkout-template.php' ) {
         $page_template = dirname( __FILE__ ) . '/mos-sp-checkout-template.php';
+        add_action('wp_footer', function () {
+            wp_dequeue_style('core-block-supports');
+        });
     }
     return $page_template;
 }
@@ -225,6 +227,11 @@ function mos_sp_checkout_enqueue_scripts(){
 	);
 	wp_localize_script( 'mos-sp-checkout-ajax', 'mos_sp_checkout_ajax_obj', $ajax_params );
 
+    $current_theme = wp_get_theme();
+    if ($current_theme->get('Name') == 'Woodmart' || $current_theme->get('Template') == 'woodmart') {   
+        wp_enqueue_style( 'wd-woo-page-checkout-predefined', get_template_directory_uri() . '/css/parts/woo-page-checkout-predefined.min.css' );
+    }
+
 	wp_enqueue_script( 'jquery.validate.min', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js', array('jquery') );    
 	wp_enqueue_style( 'mos-sp-checkout', plugins_url( 'css/mos-sp-checkout.css', __FILE__ ), array(), time() );
 }
@@ -393,3 +400,73 @@ function mos_order_modify_ajax_callback () {
     exit; // required. to end AJAX request.
 }
 
+function mos_sp_checkout_form_func( $atts = array(), $content = null ) {
+	if (is_admin()) return 'Checkout form will appear here';
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+	$html = '';
+	$atts = shortcode_atts( array(
+		'class' => '',
+		'products' => '',
+        'all' => '',
+        'title' => '',
+	), $atts, 'mos_sp_checkout_form' ); 
+
+    if (@$atts['products']) {
+        $products = explode(',', $atts['products']);
+        if (@$atts['all']){
+			WC()->cart->empty_cart();
+            foreach($products as $p) {
+                WC()->cart->add_to_cart( $p );
+            }
+        } else{
+            WC()->cart->empty_cart();
+            WC()->cart->add_to_cart( (@$_GET['p_id'])?$_GET['p_id']:$products[0] );
+        }
+    	//add_filter('woocommerce_is_checkout', '__return_true');
+        add_action(
+            'woocommerce_after_checkout_billing_form', 
+            function($arguments) use ($atts, $products) { 
+                if (!$atts['all']) {
+                    $crrent_cart_ids = [];
+                    $cart = WC()->cart->get_cart();
+                    foreach( $cart as $cart_item_key => $cart_item ){
+                        $cart_product = $cart_item['data'];
+                        $crrent_cart_ids[] = $cart_product->get_id();
+                    }
+                    ?>
+                    <div id="mos-sp-checkout-products-form-wrap">
+						<?php if (@$atts['title']) : ?>
+						<h3 class="mos_products_heading"><?php echo $atts['title'] ?></h3>
+						<?php endif; ?>
+                        <?php foreach($products as $key => $value) :
+                            $_product = wc_get_product( $value );
+                            ?>
+                            <a href="?p_id=<?php echo $value ?>#mos-sp-checkout-products-form-wrap" class="mos-sp-checkout-product-form <?php echo (in_array($value, $crrent_cart_ids))?'checked':'' ?>" data-id="<?php echo $value ?>" data-page_id="<?php echo get_the_ID() ?>">
+                                <span class="mos-sp-checkout-indicator"></span>
+                                <span class="mos-sp-checkout-text-wrapper">
+                                    <span class="mos-sp-checkout-product-title"><?php echo $_product->get_name(); ?></span>
+                                    <span class="mos-sp-checkout-price"><?php echo $_product->get_price_html(); ?></span>
+                                </span>
+                            </a>
+                        <?php endforeach;?>                
+                    </div>
+                    <?php
+                }
+            }
+        );
+    }
+
+    ob_start(); ?>
+    <section id="checkout-form-wrap" class="checkout-form-wrap woocommerce <?php echo @$atts['class']?>">
+		<div class="woocommerce-checkout woocommerce-page">
+			<?php 
+			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+				echo do_shortcode('[woocommerce_checkout]');
+			} 
+			?>			
+		</div>
+    </section>
+    <?php $html = ob_get_clean();	
+	return $html;
+}
+add_shortcode( 'mos_sp_checkout_form', 'mos_sp_checkout_form_func' );
